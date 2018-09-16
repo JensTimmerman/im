@@ -11,13 +11,29 @@ CATEGORIES = (
     ('SW', 'SWEETS'),
     ('SN', 'SNACKS'),
     ('SP', 'SPICES'),
+    ('DR', 'DRINKS'),
 )
 
+UNITS = (
+    ('L', 'miliLiter'),
+    ('GR', 'Grams'),
+    ('Roll', 'Roll'),
+    ('Tube', 'Tube'),
+    ('Bag', 'Bag'),
+    ('Bar', 'Bar'),
+    ('Pack', 'Pack'),
+)
+
+
+
+#class ShoppingList(models.Model):
 
 class PantryItem(models.Model):
     name =  models.CharField(max_length=200)
     category = models.CharField(max_length=200, choices=CATEGORIES)
-    min_quantity = models.IntegerField(default=1)
+    min_quantity = models.IntegerField(default=1) #, decimal_places=3, max_digits=32)
+    unit = models.CharField(max_length=20, null=True, blank=True, choices=UNITS)
+    info = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -25,7 +41,10 @@ class PantryItem(models.Model):
 class PantryItemLine(models.Model):
     pantry_item = models.ForeignKey(PantryItem, on_delete=models.PROTECT, default='UN' )
     quantity = models.IntegerField(default=1)
-    expiry_date = models.DateField()
+    expiry_date = models.DateField(null=True, blank=True)
+    size = models.IntegerField(default=1) #, decimal_places=3, max_digits=32)
+    unit = models.CharField(max_length=20, null=True, blank=True, choices=UNITS)
+    info = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
-        return self.pantry_item.name + ' ' + self.quantity
+        return self.pantry_item.name + ' ' + str(self.quantity)

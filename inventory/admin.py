@@ -10,9 +10,25 @@ class PantryItemInLine(admin.TabularInline):
 
 class PantryItemInLineAdmin(admin.ModelAdmin):
     list_filter = ['expiry_date']
+    list_display = (
+        'pantry_item',
+        'quantity',
+        'expiry_date',
+        'size',
+        'unit',
+        'info',
+    )
+
 
 class PantryItemAdmin(admin.ModelAdmin):
     inlines = [PantryItemInLine]
+    list_display = (
+        'name',
+        'category',
+        'min_quantity',
+        'unit',
+        'info',
+    )
 
 admin.site.register(PantryItem, PantryItemAdmin)
 admin.site.register(PantryItemLine, PantryItemInLineAdmin)
