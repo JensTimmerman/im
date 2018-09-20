@@ -1,0 +1,13 @@
+{% extends 'inventory/base.html' %}
+
+{% block content %}
+{% if pis %}
+    <ul>
+    {% for pi in pis %}
+        <li><a href="{% url 'im:pantryitemlinedetail' pi.id %}">{{ pi}}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Pantry Items are available.</p>
+{% endif %}
+{% endblock %}

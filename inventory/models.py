@@ -27,8 +27,16 @@ UNITS = (
 
 
 #class ShoppingList(models.Model):
+    # - pantryitems < min_quantity in pantryitemlists
+    # - shoppinglistitems
+    # - user ?
+    # info
+    # quantity
+    # unit
+    # name
 
 class PantryItem(models.Model):
+    # user?
     name =  models.CharField(max_length=200)
     category = models.CharField(max_length=200, choices=CATEGORIES)
     min_quantity = models.IntegerField(default=1) #, decimal_places=3, max_digits=32)
@@ -39,6 +47,7 @@ class PantryItem(models.Model):
         return self.name
 
 class PantryItemLine(models.Model):
+    # user?
     pantry_item = models.ForeignKey(PantryItem, on_delete=models.PROTECT, default='UN' )
     quantity = models.IntegerField(default=1)
     expiry_date = models.DateField(null=True, blank=True)

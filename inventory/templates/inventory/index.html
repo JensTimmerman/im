@@ -1,0 +1,8 @@
+{% extends 'inventory/base.html' %}
+
+{% block content %}
+<a href="{% url 'im:eat' %} ">eat</a>
+<a href="{% url 'im:shoppinglist' %} ">shoppinglist</a>
+<a href="{% url 'im:expirations' %} ">expirations</a>
+<a href="{% url 'admin:index' %} ">admin</a>
+{% endblock %}
