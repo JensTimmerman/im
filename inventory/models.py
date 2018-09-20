@@ -48,7 +48,7 @@ class PantryItem(models.Model):
 
 class PantryItemLine(models.Model):
     # user?
-    pantry_item = models.ForeignKey(PantryItem, on_delete=models.PROTECT, default='UN' )
+    pantry_item = models.ForeignKey(PantryItem, on_delete=models.PROTECT, default='UC' )
     quantity = models.IntegerField(default=1)
     expiry_date = models.DateField(null=True, blank=True)
     size = models.IntegerField(default=1) #, decimal_places=3, max_digits=32)
