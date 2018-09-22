@@ -1,8 +1,21 @@
 {% extends 'inventory/base.html' %}
 
 {% block content %}
-<a href="{% url 'im:eat' %} ">eat</a>
-<a href="{% url 'im:shoppinglist' %} ">shoppinglist</a>
-<a href="{% url 'im:expirations' %} ">expirations</a>
-<a href="{% url 'admin:index' %} ">admin</a>
+<h2>Welcome to your pantry inventory.</h2>
+<p>
+Use the navbar on top to start doing things.
+</p>
+<p>
+Consume: Mark pantry items as consumed.
+</p>
+<p>
+Shopping list: See items you need to restock
+</p>
+<p>
+Expirations: See items that will expire soon
+
+</p>
+<p>
+TODO: add items to your shopping list below
+TODO: see expirted items below?
 {% endblock %}

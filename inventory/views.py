@@ -11,12 +11,12 @@ def index(request):
     return render(request, "inventory/index.html")
 
 
-def eat(request):
-    return HttpResponse("TODO: implement web interface voor eten")
+def consume(request):
+    return render(request, "inventory/consume.html")
 
 
 def shoppinglist(request):
-    return HttpResponse("TODO: implement web interface voor shoppinglijst")
+    return render(request, "inventory/shoppinglist.html")
 
 
 class Expirations(generic.ListView):

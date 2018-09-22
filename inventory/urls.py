@@ -4,7 +4,7 @@ from . import views
 app_name = 'im'
 urlpatterns = [
     path('', views.index, name='index'),
-    path('eat/', views.eat, name='eat'),
+    path('consume/', views.consume, name='consume'),
     path('shoppinglist/', views.shoppinglist, name='shoppinglist'),
     # TODO: add exiperes before X date?
     # TODO: add categories
