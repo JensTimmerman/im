@@ -2,11 +2,13 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import PantryItem, PantryItemLine
+from .models import PantryItem, PantryItemLine, Unit, Category
+
 
 class PantryItemInLine(admin.TabularInline):
     model = PantryItemLine
     extra = 1
+
 
 def upper_case_name(obj):
     return obj.name.upper()
@@ -18,12 +20,13 @@ def capitalize_name(obj):
 upper_case_name.short_description = 'Name'
 
 
-
 class PantryItemInLineAdmin(admin.ModelAdmin):
-    list_filter = ['expiry_date', 'unit', 'pantry_item', 'pantry_item__min_quantity']
+    list_filter = ['expiry_date', 'pantry_item__unit', 'pantry_item', 'pantry_item__min_quantity']
     search_fields = ['info', 'pantry_item__name', 'pantry_item__info']
-    autocomplete_fields = ['pantry_item',]
-    fields =  (
+    autocomplete_fields = ['pantry_item']
+
+    readonly_fields = ['unit']
+    fields = (
         'pantry_item',
         'quantity',
         'expiry_date',
@@ -40,14 +43,18 @@ class PantryItemInLineAdmin(admin.ModelAdmin):
         'info',
     )
 
+class AutocompleteAdmin(admin.ModelAdmin):
+    """Class used to satisfy an admin check"""
+    search_fields = ["name"]
 
 class PantryItemAdmin(admin.ModelAdmin):
     list_filter = ['category', 'unit', 'min_quantity']
-    search_fields = ['info', 'name']
+    search_fields = ['info', 'name', 'category', 'unit']
+    autocomplete_fields = ['category', 'unit']
     inlines = [PantryItemInLine]
     # TODO: make category a model
     #autocomplete_fields = ['category',]
-    fields =  (
+    fields = (
         'name',
         'category',
         ('min_quantity', 'unit'),
@@ -64,3 +71,5 @@ class PantryItemAdmin(admin.ModelAdmin):
 
 admin.site.register(PantryItem, PantryItemAdmin)
 admin.site.register(PantryItemLine, PantryItemInLineAdmin)
+admin.site.register(Unit, AutocompleteAdmin)
+admin.site.register(Category, AutocompleteAdmin)

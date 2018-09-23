@@ -18,9 +18,6 @@ def consume(request):
     return render(request, "inventory/consume.html")
 
 
-def add(request):
-    return render(request, "inventory/add.html")
-
 class Shoppinglist(generic.ListView):
     template_name = "inventory/shoppinglist.html"
     context_object_name = 'pis'
@@ -30,14 +27,9 @@ class Shoppinglist(generic.ListView):
         #return PantryItemLine.objects.filter(quantity__lt=F('pantry_item__min_quantity'))
 
 
-
 class Expirations(generic.ListView):
     template_name = "inventory/expirations.html"
     context_object_name = 'pis'
 
     def get_queryset(self):
         return PantryItemLine.objects.exclude(expiry_date__isnull=True).order_by('expiry_date')
-
-
-class DetailView(generic.DetailView):
-    model = PantryItemLine

@@ -2,17 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-CATEGORIES = (
-    ('UC', 'UNCATEGORIZED'),  # bloem meel pasta
-    ('GS', 'GENRAL_STOCK'),  # bloem meel pasta
-    ('CANS', 'CANS'),
-    ('BR', 'BREAKFAST'),
-    ('SAV', 'SAVORIES'),
-    ('SW', 'SWEETS'),
-    ('SN', 'SNACKS'),
-    ('SP', 'SPICES'),
-    ('DR', 'DRINKS'),
-)
 
 UNITS = (
     ('L', 'miliLiter'),
@@ -25,22 +14,46 @@ UNITS = (
 )
 
 
+class Category(models.Model):
+    """A category for a pantry item to be in
+    e.g.
+    UNCATEGORIZED
+    GENRAL_STOCK  # bloem meel pasta
+    CANS
+    BREAKFAST
+    SAVORIES
+    SWEETS
+    SNACKS
+    SPICES
+    DRINKS
+    """
+    name = models.CharField(max_length=50)
 
-#class ShoppingList(models.Model):
-    # - pantryitems < min_quantity in pantryitemlists
-    # - shoppinglistitems
-    # - user ?
-    # info
-    # quantity
-    # unit
-    # name
+    def __str__(self):
+        return self.name
+
+
+class Unit(models.Model):
+    """A unit
+    e.g. Mililiter
+    Grams
+    Roll
+    Tube
+    Bag
+    Bar
+    Pack
+    """
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
 
 class PantryItem(models.Model):
     # user?
     name =  models.CharField(max_length=200)
-    category = models.CharField(max_length=200, choices=CATEGORIES, default='UC')
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
     min_quantity = models.IntegerField(default=1) #, decimal_places=3, max_digits=32)
-    unit = models.CharField(max_length=20, null=True, blank=True, choices=UNITS)
+    unit = models.ForeignKey(Unit, on_delete=models.PROTECT, null=True)
     info = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
@@ -52,11 +65,13 @@ class PantryItemLine(models.Model):
     quantity = models.IntegerField(default=1)
     expiry_date = models.DateField(null=True, blank=True)
     size = models.IntegerField(default=1) #, decimal_places=3, max_digits=32)
-    unit = models.CharField(max_length=20, null=True, blank=True, choices=UNITS)
     info = models.CharField(max_length=200, null=True, blank=True)
+
+    def unit(self):
+        return self.pantry_item.unit
 
     def get_absolute_url(self):
         return reverse('pantryitemlinedetail', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return ' '.join([str(x) for x in [self.pantry_item.name,  self.quantity, 'X', self.size, self.unit]])
+        return ' '.join([str(x) for x in [self.pantry_item.name,  self.quantity, 'X', self.size, self.pantry_item.unit]])

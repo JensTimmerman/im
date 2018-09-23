@@ -10,5 +10,4 @@ urlpatterns = [
     # TODO: add categories
     # TODO: add pantry item selection
     path('expirations/', views.Expirations.as_view(), name='expirations'),
-    path('item/<int:pk>/', views.DetailView.as_view(), name='pantryitemlinedetail'),
 ]
