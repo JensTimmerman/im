@@ -1,12 +1,19 @@
 {% extends 'inventory/base.html' %}
 
 {% block content %}
+<h1>Expirations</h1>
 {% if pis %}
+{% regroup pis by expiry_date as pis_by_date %}
+{% for date in pis_by_date %}
+    <div class="content">
+    <h2>{{ date.grouper|date:"d F Y" }}</h2>
     <ul>
-    {% for pi in pis %}
-        <li><a href="{% url 'im:pantryitemlinedetail' pi.id %}">{{ pi}}</a></li>
+    {% for pi in date.list %}
+        <li><a href="{% url 'admin:inventory_pantryitemline_change' pi.id %}">{{ pi}}</a></li>
     {% endfor %}
     </ul>
+    </div>
+{% endfor %}
 {% else %}
     <p>No Pantry Items are available.</p>
 {% endif %}

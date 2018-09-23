@@ -29,6 +29,7 @@ The object of this django app is to keep track of which goods you own, when they
 # feature requests
 ## High
 - shopping list based on min quantity
+- make it look something like this https://getbootstrap.com/docs/4.0/examples/dashboard/
 
 - one off shoping list
 
