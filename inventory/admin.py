@@ -49,7 +49,7 @@ class AutocompleteAdmin(admin.ModelAdmin):
 
 class PantryItemAdmin(admin.ModelAdmin):
     list_filter = ['category', 'unit', 'min_quantity']
-    search_fields = ['info', 'name', 'category', 'unit']
+    search_fields = ['info', 'name', 'category__name', 'unit__name']
     autocomplete_fields = ['category', 'unit']
     inlines = [PantryItemInLine]
     # TODO: make category a model
