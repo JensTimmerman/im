@@ -28,13 +28,17 @@ The object of this django app is to keep track of which goods you own, when they
 
 # feature requests
 ## High
-- shopping list based on min quantity
+- make expirations a calendar view, generate ics file to import
+- add locations to items
+- public wishlist
+- one off shoping list
+- add easy consume view
+ - save date consumed in history
+
+# medium
 - make it look something like this https://getbootstrap.com/docs/4.0/examples/dashboard/
 
-- one off shoping list
-
 - easy clearing of shopping list
-- correct capilisation
 
 ## low
 - add recepies

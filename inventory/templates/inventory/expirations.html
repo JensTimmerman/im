@@ -9,7 +9,7 @@
     <h2>{{ date.grouper|date:"d F Y" }}</h2>
     <ul>
     {% for pi in date.list %}
-        <li><a href="{% url 'admin:inventory_pantryitemline_change' pi.id %}">{{ pi}}</a></li>
+        <li><a href="{% url 'admin:inventory_pantryitemline_change' pi.id %}">{{ pi|title}}</a></li>
     {% endfor %}
     </ul>
     </div>

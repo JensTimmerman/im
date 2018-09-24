@@ -32,4 +32,4 @@ class Expirations(generic.ListView):
     context_object_name = 'pis'
 
     def get_queryset(self):
-        return PantryItemLine.objects.exclude(expiry_date__isnull=True).order_by('expiry_date')
+        return PantryItemLine.objects.exclude(expiry_date__isnull=True).exclude(quantity=0).order_by('expiry_date')
