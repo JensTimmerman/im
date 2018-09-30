@@ -1,8 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
-
-from .models import PantryItem, PantryItemLine, Unit, Category
+from .models import PantryItem, PantryItemLine, Unit, Category, Location
 
 
 class PantryItemInLine(admin.TabularInline):
@@ -43,22 +41,27 @@ class PantryItemInLineAdmin(admin.ModelAdmin):
         'info',
     )
 
+
 class AutocompleteAdmin(admin.ModelAdmin):
     """Class used to satisfy an admin check"""
     search_fields = ["name"]
 
+
 class PantryItemAdmin(admin.ModelAdmin):
-    list_filter = ['category', 'unit', 'min_quantity']
+    list_filter = ['category', 'unit', 'min_quantity', 'location']
     search_fields = ['info', 'name', 'category__name', 'unit__name']
     autocomplete_fields = ['category', 'unit']
     inlines = [PantryItemInLine]
+
     # TODO: make category a model
     #autocomplete_fields = ['category',]
     fields = (
         'name',
         'category',
         ('min_quantity', 'unit'),
+        'location',
         'info',
+        'expiry_duration',
     )
 
     list_display = (
@@ -73,3 +76,4 @@ admin.site.register(PantryItem, PantryItemAdmin)
 admin.site.register(PantryItemLine, PantryItemInLineAdmin)
 admin.site.register(Unit, AutocompleteAdmin)
 admin.site.register(Category, AutocompleteAdmin)
+admin.site.register(Location, AutocompleteAdmin)
