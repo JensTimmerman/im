@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.views import generic
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.db.models import F, Sum
+from django.db.models import F, Sum, Q
 
 
 from .models import PantryItem, PantryItemLine
@@ -23,8 +23,12 @@ class Shoppinglist(generic.ListView):
     context_object_name = 'pis'
 
     def get_queryset(self):
-        return PantryItem.objects.annotate(total_quantity=Sum(F('pantryitemline__quantity') * F('pantryitemline__size'))).filter(min_quantity__gt=F('total_quantity'))
-        #return PantryItemLine.objects.filter(quantity__lt=F('pantry_item__min_quantity'))
+        """
+        Return pantryitems for which we have None itemlines or Itemlines whith a total quantitly less than required
+        """
+        return PantryItem.objects.annotate(total_quantity=Sum(F('pantryitemline__quantity') *
+            F('pantryitemline__size'))).filter(Q(min_quantity__gt=F('total_quantity')) | Q(pantryitemline=None,
+                                                                                           min_quantity__gt=0))
 
 
 class Expirations(generic.ListView):
