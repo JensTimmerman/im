@@ -35,7 +35,7 @@ The object of this django app is to keep track of which goods you own, when they
 - add easy consume view
  - save date consumed in history
 
-# medium
+## medium
 - make it look something like this https://getbootstrap.com/docs/4.0/examples/dashboard/
 
 - easy clearing of shopping list
