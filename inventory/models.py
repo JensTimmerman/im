@@ -46,25 +46,31 @@ class Location(models.Model):
             return self.name + ' ' + str(self.in_location)
         return self.name
 
+
 class PantryItem(models.Model):
     """A think you keep in your pantry """
-    name =  models.CharField(max_length=200)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     min_quantity = models.IntegerField(default=1) #, decimal_places=3, max_digits=32)
-    unit = models.ForeignKey(Unit, on_delete=models.PROTECT, null=True)
-    info = models.CharField(max_length=200, null=True, blank=True)
     # some things don't have a fixed expiry date, like legumes or garlic, we can specify a default expiration for
     # this.
     # if expiry duration is set the expiration date for a pantryitemline will be set to now + duration on save
     # represents days
     expiry_duration = models.IntegerField(null=True, blank=True)
-    # location is saved on a per pantryitem base, not pantryitemline
+    name =  models.CharField(max_length=200)
+    unit = models.ForeignKey(Unit, on_delete=models.PROTECT, null=True)
+    info = models.CharField(max_length=200, null=True, blank=True)
+    # location is saved on a per item base, not itemline
     # you can have multiple pantries with subpantries
-    # if a pantryitem moves to the kitchen or fridge it is no longer a pantry item
-    location = models.ForeignKey(Location, on_delete=models.PROTECT, null=True)
+    location = models.ForeignKey(Location, on_delete=models.PROTECT, null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+
+class ShoppingListItem(PantryItem):
+    """Items to buy now that aren't meant for the pantry but for imidiate usage"""
+    pass
+
 
 class PantryItemLine(models.Model):
     # user?
