@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import PantryItem, PantryItemLine, Unit, Category, Location
+from .models import ShoppingListItem
 
 
 class PantryItemInLine(admin.TabularInline):
@@ -12,6 +13,7 @@ class PantryItemInLine(admin.TabularInline):
 class LocationInLine(admin.TabularInline):
     model = Location
     extra = 1
+
 
 def upper_case_name(obj):
     return obj.name.upper()
@@ -81,7 +83,18 @@ class PantryItemAdmin(admin.ModelAdmin):
         'info',
     )
 
+
+class ShoppingListItemAdmin(PantryItemAdmin):
+
+    inlines = []
+    fields = (
+        'name',
+        ('min_quantity', 'unit'),
+        'info',
+    )
+
 admin.site.register(PantryItem, PantryItemAdmin)
+admin.site.register(ShoppingListItem, ShoppingListItemAdmin)
 admin.site.register(PantryItemLine, PantryItemLineAdmin)
 admin.site.register(Unit, AutocompleteAdmin)
 admin.site.register(Category, AutocompleteAdmin)

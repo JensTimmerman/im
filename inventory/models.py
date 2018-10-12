@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Category(models.Model):
@@ -49,8 +50,8 @@ class Location(models.Model):
 
 class PantryItem(models.Model):
     """A think you keep in your pantry """
-    category = models.ForeignKey(Category, on_delete=models.PROTECT)
-    min_quantity = models.IntegerField(default=1) #, decimal_places=3, max_digits=32)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, null=True, blank=True)
+    min_quantity = models.IntegerField(default=1)
     # some things don't have a fixed expiry date, like legumes or garlic, we can specify a default expiration for
     # this.
     # if expiry duration is set the expiration date for a pantryitemline will be set to now + duration on save
