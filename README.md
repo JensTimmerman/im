@@ -8,6 +8,7 @@ The object of this django app is to keep track of which goods you own, when they
 - Enter items in your pantry (or other locations, with their location) with their expiry date
 - Items can have a minimum quantity you always want to keep in the pantry
  - a shopping list is automatically populated with items whose quantity is below this minimum quantity
+  - you can add one off items to this shopping list that are not tracked in the inventory.
 - You get an overview of items per expiry date so you know what to consume first (or throw away)
 
 - Extensive search and filtering and grouping on locations, categories, units, expiry date using the auto generated django admin
@@ -41,7 +42,6 @@ The object of this django app is to keep track of which goods you own, when they
 ## High
 - make expirations a calendar view, generate ics file to import
 - public wishlist
-- one off shoping list
 - easy clearing of shopping list
 - add easy consume view
  - save date consumed in history
