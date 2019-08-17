@@ -46,6 +46,7 @@ The object of this django app is to keep track of which goods you own, when they
 - add easy consume view
  - save date consumed in history
 
+## medium
 # medium high
 - mobile app
  - (requires rest api?)
