@@ -1,10 +1,17 @@
 from django.contrib import admin
 
 from .models import PantryItem, PantryItemLine, Unit, Category, Location
+from .models import ShoppingListItem
 
 
 class PantryItemInLine(admin.TabularInline):
     model = PantryItemLine
+    extra = 1
+
+
+
+class LocationInLine(admin.TabularInline):
+    model = Location
     extra = 1
 
 
@@ -18,7 +25,7 @@ def capitalize_name(obj):
 upper_case_name.short_description = 'Name'
 
 
-class PantryItemInLineAdmin(admin.ModelAdmin):
+class PantryItemLineAdmin(admin.ModelAdmin):
     list_filter = ['expiry_date', 'pantry_item__unit', 'pantry_item', 'pantry_item__min_quantity']
     search_fields = ['info', 'pantry_item__name', 'pantry_item__info']
     autocomplete_fields = ['pantry_item']
@@ -47,6 +54,10 @@ class AutocompleteAdmin(admin.ModelAdmin):
     search_fields = ["name"]
 
 
+class LocationAdmin(AutocompleteAdmin):
+    inlines = [LocationInLine]
+
+
 class PantryItemAdmin(admin.ModelAdmin):
     list_filter = ['category', 'unit', 'min_quantity', 'location']
     search_fields = ['info', 'name', 'category__name', 'unit__name']
@@ -72,8 +83,19 @@ class PantryItemAdmin(admin.ModelAdmin):
         'info',
     )
 
+
+class ShoppingListItemAdmin(PantryItemAdmin):
+
+    inlines = []
+    fields = (
+        'name',
+        ('min_quantity', 'unit'),
+        'info',
+    )
+
 admin.site.register(PantryItem, PantryItemAdmin)
-admin.site.register(PantryItemLine, PantryItemInLineAdmin)
+admin.site.register(ShoppingListItem, ShoppingListItemAdmin)
+admin.site.register(PantryItemLine, PantryItemLineAdmin)
 admin.site.register(Unit, AutocompleteAdmin)
 admin.site.register(Category, AutocompleteAdmin)
-admin.site.register(Location, AutocompleteAdmin)
+admin.site.register(Location, LocationAdmin)
