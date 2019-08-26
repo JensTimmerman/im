@@ -70,10 +70,12 @@ The object of this django app is to keep track of which goods you own, when they
   dates
 - figure out how long a certain item can last given current stock and average usage
 
-- easily deploy somewhere (docker? on synology?)
+- easily deploy somewhere
 
 ## low
 - add recepies
 - shopping list created based on recepy ingredients
 - auto proposal of recepy based on next expiry dates
 - offer to buy things that have been on shopping list for a while online (in bulk/aggregated)
+- 3d view of where things are in space
+- vr to help locate things
