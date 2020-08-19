@@ -36,7 +36,8 @@ Now you are running the development server, Visit http://127.0.0.1:8000/admin/
 
 # installation
 ```
-pip install django psycopg2 gunicorn
+dnf install python3-pip git
+pip3 install django psycopg2 gunicorn
 git clone git@github.com:JensTimmerman/im.git
 cd im
 vim im/settings.py
