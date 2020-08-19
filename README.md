@@ -41,7 +41,7 @@ git clone git@github.com:JensTimmerman/im.git
 cd im
 vim im/settings.py
 ```
-change key,: ''.join(random.SystemRandom().choice(string.printable) for i in range(50))
+change key,: `''.join(random.SystemRandom().choice(string.printable) for i in range(50))`
 set DEBUG=False
 set allowed_hosts to the hosts you want to allow (e.g. [localhost, 127.0.0.1, 192.168.1.108, im.yourdomain] 
 
