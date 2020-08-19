@@ -18,7 +18,7 @@ The object of this django app is to keep track of which goods you own, when they
 
 # Getting started (development/testing)
 ```
-dnf install -y python3-pip
+dnf install -y python3-pip git
 pip3 install django
 git clone git@github.com:JensTimmerman/im.git
 cd im
