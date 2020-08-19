@@ -16,27 +16,142 @@ The object of this django app is to keep track of which goods you own, when they
 - Locations are recursive so things can be in the kitchen pantry closet on the 3rd shelf on the right and still be in
   the kitchen
 
-# Getting started
-`pip3 install django`
+# Getting started (development/testing)
+```
+dnf install -y python3-pip git
+pip3 install django
+git clone git@github.com:JensTimmerman/im.git
+cd im
+
+python3 manage.py migrate
+python3 manage.py createsuperuser 
+```
+add username and password for your admin login and start the development server
+```
+python3 manage.py runserver
+```
 
 
-1. Add "inventory" to your INSTALLED_APPS setting like this::
 
-    INSTALLED_APPS = [
-        ...
-        'inventory',
-    ]
-
-2. Include the inventory URLconf in your project urls.py like this::
-
-    path('inventory/', include('inventory.urls')),
-
-3. Run `python manage.py migrate` to create the polls models.
-
-4. Start the development server and visit http://127.0.0.1:8000/admin/
-   to create a pantry inventory (you'll need the Admin app enabled).
+Now you are running the development server, Visit http://127.0.0.1:8000/admin/
+   to create a pantry inventory
 
 5. Visit http://127.0.0.1:8000/inventory/ to view your inventory website.
+
+
+# installation
+```
+dnf install python3-pip git
+pip3 install django psycopg2 gunicorn
+git clone git@github.com:JensTimmerman/im.git
+cd im
+vim im/settings.py
+```
+change key,: `''.join(random.SystemRandom().choice(string.printable) for i in range(50))`
+set DEBUG=False
+set allowed_hosts to the hosts you want to allow (e.g. [localhost, 127.0.0.1, 192.168.1.108, im.yourdomain] 
+
+configure DATABASES to point to your database server
+```
+DATABASES = { 
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'inventorryapp',
+        'USER': 'inventorryapp',
+        'PASSWORD': '<password>',
+        'HOST': '<db server ip',
+        'PORT': '', 
+    }   
+}
+```
+
+clear migrations and start from empty db
+```
+rm inventory/migrations/* -rf 
+python3 manage.py migrate
+
+
+python3 manage.py createsuperuser
+python3 ./manage.py collectstatic
+```
+add im user
+```
+useradd im
+```
+add systemd service file
+```
+
+vim /etc/systemd/system/gunicorn.service
+
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+User=im
+Group=im
+WorkingDirectory=/home/im
+ExecStart=/usr/local/bin/gunicorn --workers 1 --bind 0.0.0.0:8000 im.wsgi:application
+
+
+[Install]
+WantedBy=multi-user.target
+
+```
+
+```
+systemctl enable gunicorn
+systemctl start gunicorn
+```
+
+
+on your nginx server
+```
+
+useradd im
+
+sudo usermod -a -G im nginx
+
+chmod 710 /home/im
+
+chcon -Rt httpd_sys_content_t /home/im/
+rsync -rav /home/im/inventorryapp/static/  <app_server_ip>:/home/im/inventorryapp/static/
+
+```
+in /etc/nginx/nginx.conf
+DNS: to do manually set up a cname for im to point to yourdomain 
+```
+    server {
+       listen 80;
+       server_name im.yourdomain ;
+       location /static {
+           root /home/im/inventorryapp/static ;
+       }
+       location / {
+          proxy_pass http://192.168.122.6:8000;
+          proxy_redirect off ;
+          proxy_set_header Host $host ;
+          proxy_set_header X-Real-IP $remote_addr ;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for ;
+          proxy_max_temp_file_size 0 ;
+          client_max_body_size 10m ;
+          client_body_buffer_size 128k ;
+          proxy_connect_timeout 90 ;
+          proxy_send_timeout 90 ;
+          proxy_read_timeout 90 ;
+          proxy_buffer_size 4k ;
+          proxy_buffers 4 32k ;
+          proxy_busy_buffers_size 64k ;
+          proxy_temp_file_write_size 64k ;
+       }
+```
+```
+pip3 install certbot-nginx
+certbot -n --nginx -d im.yourodmain --hsts
+```
+
+browse to https://im.yourdomain
+
 
 # feature requests
 ## High
