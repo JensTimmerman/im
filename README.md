@@ -40,6 +40,12 @@ The object of this django app is to keep track of which goods you own, when they
 
 # feature requests
 ## High
+- Add itmes per location, click a location and then start adding items with the location list prepopulated
+- auto refresh dropdown boxes after items have been added in admin view, so page reload is not needed
+- auto parse dates in different date formats when given in a datefield. e.g. 20 12 2020 or 2020 12 20 to 2020-12-20
+ - also make ipad show the numbered keyboard here
+  - actually perhaps a date scroller is nicer here
+- units always minor case
 - make expirations a calendar view, generate ics file to import
 - public wishlist
 - easy clearing of shopping list
@@ -50,11 +56,14 @@ The object of this django app is to keep track of which goods you own, when they
 # medium high
 - mobile app
  - (requires rest api?)
+- garden something? layout
+- journal of things thrown away
 
 # medium
 - make work offline
 - add users
  - federated? use sqrl instead of passwords?
+
 
 # medium low
 - allow for lending stuff out
