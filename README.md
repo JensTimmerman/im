@@ -22,9 +22,14 @@ dnf install -y python3-pip git
 pip3 install django
 git clone git@github.com:JensTimmerman/im.git
 cd im
+
 python3 manage.py migrate
+python3 manage.py createsuperuser 
+```
+add username and password for your admin login and start the development server
+```
 python3 manage.py runserver
-````
+```
 
 
 
