@@ -167,7 +167,6 @@ browse to https://im.yourdomain
 - add easy consume view
  - save date consumed in history
 
-## medium
 # medium high
 - mobile app
  - (requires rest api?)
@@ -176,6 +175,7 @@ browse to https://im.yourdomain
 
 # medium
 - make work offline
+- add items by scanning in a shopping list
 - add users
  - federated? use sqrl instead of passwords?
 
