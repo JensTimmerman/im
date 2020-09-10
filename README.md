@@ -43,7 +43,8 @@ Now you are running the development server, Visit http://127.0.0.1:8000/admin/
 ```
 dnf install python3-pip git
 pip3 install django psycopg2 gunicorn
-git clone git@github.com:JensTimmerman/im.git
+curl https://gitea.caret.be/jens/im/archive/main.tar.gz --output im-latest.tar.gz
+tar -xvf im-latest.tar.gz
 cd im
 vim im/settings.py
 ```
