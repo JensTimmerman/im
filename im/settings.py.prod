@@ -26,7 +26,7 @@ SECRET_KEY = '{{im_secret_key}}'
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    {{im_domain}}
+    '{{im_domain}}'
 ]
 
 
@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': '{{im_db_name}}',
         'USER': '{{im_db_user}}',
         'PASSWORD': '{{im_db_password}}',
-        'HOST': '{{im_db_server_ip}}',
+        'HOST': '{{im_db_server}}',
         'PORT': '{{im_db_port}}',
     }
 }
